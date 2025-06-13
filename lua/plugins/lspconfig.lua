@@ -1,15 +1,4 @@
 -- LSP Plugins
-local orig_publish = vim.lsp.handlers['textDocument/publishDiagnostics']
-
-vim.lsp.handlers['textDocument/publishDiagnostics'] = function(err, result, ctx, config)
-  -- Checa se o LSP é o Pyright
-  local client = vim.lsp.get_client_by_id(ctx.client_id)
-  if client and client.name == 'pyright' then
-    -- Filtra todos os diagnósticos (descarta completamente)
-    result.diagnostics = {}
-  end
-  return orig_publish(err, result, ctx, config)
-end
 
 return {
   {
@@ -228,8 +217,27 @@ return {
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
-        ruff = {},
+        pyright = {
+          settings = {
+            pyright = {
+              -- Using Ruff's import organizer
+              disableOrganizeImports = true,
+            },
+            python = {
+              analysis = {
+                -- Ignore all files for analysis to exclusively use Ruff for linting
+                ignore = { '*' },
+              },
+            },
+          },
+        },
+        ruff = {
+          settings = {
+            lint = {
+              ignore = { 'F401' },
+            },
+          },
+        },
         yamlls = {
           settings = {
             yaml = {
