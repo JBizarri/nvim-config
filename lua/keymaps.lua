@@ -29,7 +29,12 @@ vim.keymap.set('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move line up' })
 vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
 vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
-vim.keymap.set('n', '<leader>d', '"_d', { desc = '[D]elete without copying' })
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = '[D]elete without copying' })
+
+vim.keymap.set({ 'n', 'o', 'x' }, '<leader>w', "<cmd>lua require('spider').motion('w')<CR>", { desc = 'Move to the beginning of the next subword' })
+vim.keymap.set({ 'n', 'o', 'x' }, '<leader>e', "<cmd>lua require('spider').motion('e')<CR>", { desc = 'Move to the end of the next subword' })
+vim.keymap.set({ 'n', 'o', 'x' }, '<leader>b', "<cmd>lua require('spider').motion('b')<CR>", { desc = 'Move to the beginning of the previous subword' })
+vim.keymap.set('n', 'c<leader>w', "c<cmd>lua require('spider').motion('e')<CR>", { desc = '[C]hange Sub[W]ord' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -45,4 +50,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.keymap.set('n', '<leader>cp', function()
+  vim.fn.setreg('+', vim.fn.expand '%:p')
+  print('Copied path: ' .. vim.fn.expand '%:p')
+end, { desc = '[C]opy Absolute File [P]ath' })
+
+vim.keymap.set('n', '<leader>cr', function()
+  vim.fn.setreg('+', vim.fn.expand '%')
+  print('Copied path: ' .. vim.fn.expand '%')
+end, { desc = '[C]opy [R]elative File Path' })
 -- vim: ts=2 sts=2 sw=2 et
