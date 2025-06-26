@@ -31,11 +31,6 @@ vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = '[D]elete without copying' })
 
-vim.keymap.set('n', 'c<leader>w', "c<cmd>lua require('spider').motion('e')<CR>", { desc = 'Next subword' })
-vim.keymap.set({ 'n', 'o', 'x' }, '<leader>w', "<cmd>lua require('spider').motion('w')<CR>", { desc = 'Next subword' })
-vim.keymap.set({ 'n', 'o', 'x' }, '<leader>e', "<cmd>lua require('spider').motion('e')<CR>", { desc = 'Next end of subword' })
-vim.keymap.set({ 'n', 'o', 'x' }, '<leader>b', "<cmd>lua require('spider').motion('b')<CR>", { desc = 'Prev word' })
-
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
